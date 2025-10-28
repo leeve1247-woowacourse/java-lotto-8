@@ -52,7 +52,7 @@ public class LottoGameConfigurator {
             try {
                 lottoGameConfigValidator.check(bonusNumber, winningNumbers);
             } catch (Exception exception) {
-                System.out.println("[Error]" + exception.getMessage());
+                System.out.println(exception.getMessage());
                 continue;
             }
             return Integer.valueOf(bonusNumber);
@@ -65,7 +65,7 @@ public class LottoGameConfigurator {
             try {
                 return lottoGameConfigValidator.checkAndParse(winningNumbers);
             } catch (Exception exception) {
-                System.out.println("[Error]" + exception.getMessage());
+                System.out.println(exception.getMessage());
             }
         }
     }
@@ -76,7 +76,7 @@ public class LottoGameConfigurator {
             try {
                 lottoGameConfigValidator.check(money);
             } catch (Exception exception) {
-                System.out.println("[Error]" + exception.getMessage());
+                System.out.println(exception.getMessage());
                 continue;
             }
             return Integer.valueOf(money);
