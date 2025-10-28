@@ -26,8 +26,8 @@ public enum Rank {
         return condition;
     }
 
-    public Boolean checkBonus(boolean comp) {
-        return bonus == null || bonus == comp;
+    public Boolean checkBonus(boolean hasBonus) {
+        return bonus == null || bonus == hasBonus;
     }
 
     public Boolean getBonus() {
