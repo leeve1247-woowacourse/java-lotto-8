@@ -1,4 +1,6 @@
 package lotto.dto;
 
-public class LottoGameRecord {
+import java.util.Map;
+
+public record LottoGameRecord(Map<Rank, Integer> winnersByRank, Double profitRate) {
 }
