@@ -12,5 +12,11 @@ public class ConsoleView {
     }
 
     public void print(LottoGameRecord gameRecord) {
+        outputView.print(gameRecord);
+    }
+
+    public String getUserInput(String simpleLine) {
+        outputView.print(simpleLine);
+        return inputView.getUserInput();
     }
 }
