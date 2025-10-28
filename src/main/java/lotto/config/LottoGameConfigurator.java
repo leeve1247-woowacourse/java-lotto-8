@@ -1,5 +1,6 @@
 package lotto.config;
 
+import camp.nextstep.edu.missionutils.Randoms;
 import lotto.dto.Lotto;
 import lotto.view.ConsoleView;
 
@@ -9,16 +10,15 @@ import java.util.List;
 public class LottoGameConfigurator {
     private LottoGameConfigValidator lottoGameConfigValidator = new LottoGameConfigValidator();
     private ConsoleView consoleView;
-
     public LottoGameConfigurator(ConsoleView consoleView) {
         this.consoleView = consoleView;
     }
 
     public LottoGameConfig initGameConfig() {
-        Number money = initMoney();
+        Integer money = initMoney();
         List<Lotto> lottos = initLottos(money);
-        List<Number> winningNumbers = initWinningNumbers();
-        Number bonusNumber = initBonusNumber();
+        List<Integer> winningNumbers = initWinningNumbers();
+        Integer bonusNumber = initBonusNumber(winningNumbers);
 
         return new LottoGameConfig(
                 lottos,
@@ -27,19 +27,51 @@ public class LottoGameConfigurator {
         );
     }
 
-    private List<Lotto> initLottos(Number money) {
-        return new ArrayList<>();
+    private List<Lotto> initLottos(Integer money) {
+        List<Lotto> lottos = new ArrayList<>();
+        int count = money / 1000;
+        while (count > 0) {
+            List<Integer> integers = Randoms.pickUniqueNumbersInRange(1, 45, 6);
+            lottos.add(new Lotto(integers));
+            count = count - 1;
+        }
+        return lottos;
     }
 
-    private Number initBonusNumber() {
-        return 0;
+    private Integer initBonusNumber(List<Integer> winningNumbers) {
+        while (true) {
+            String bonusNumber = consoleView.getUserInput("보너스 번호를 입력해 주세요.");
+            try {
+                lottoGameConfigValidator.check(bonusNumber, winningNumbers);
+            } catch (Exception exception) {
+                System.out.println("[Error]" + exception.getMessage());
+                continue;
+            }
+            return Integer.valueOf(bonusNumber);
+        }
     }
 
-    private List<Number> initWinningNumbers() {
-        return new ArrayList<>();
+    private List<Integer> initWinningNumbers() {
+        while (true) {
+            String winningNumbers = consoleView.getUserInput("당첨 번호를 입력해 주세요.");
+            try {
+                return lottoGameConfigValidator.checkAndParse(winningNumbers);
+            } catch (Exception exception) {
+                System.out.println("[Error]" + exception.getMessage());
+            }
+        }
     }
 
-    private Number initMoney() {
-        return 0;
+    private Integer initMoney() {
+        while (true) {
+            String money = consoleView.getUserInput("구입금액을 입력해 주세요");
+            try {
+                lottoGameConfigValidator.check(money);
+            } catch (Exception exception) {
+                System.out.println("[Error]" + exception.getMessage());
+                continue;
+            }
+            return Integer.valueOf(money);
+        }
     }
 }
