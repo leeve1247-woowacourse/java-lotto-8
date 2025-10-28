@@ -5,12 +5,12 @@ import java.util.List;
 
 public class LottoGameConfigValidator {
     public void check(String userInputMoney) throws IllegalArgumentException {
-        int money = Integer.parseInt(userInputMoney);
+        int money = getInteger(userInputMoney);
         if (money < 1000) {
-            throw new IllegalArgumentException("금액이 부족합니다.");
+            throw new UpperCaseException("금액이 부족합니다.");
         }
         if (money % 1000 > 0) {
-            throw new IllegalArgumentException("천 원 단위로 입력해주세요");
+            throw new UpperCaseException("천 원 단위로 입력해주세요");
         }
     }
 
@@ -25,10 +25,18 @@ public class LottoGameConfigValidator {
     }
 
     public void check(String rawBonusNumber, List<Integer> winningNumbers) {
-        Integer bonusNumber = Integer.valueOf(rawBonusNumber);
+        Integer bonusNumber = getInteger(rawBonusNumber);
         checkIfInRange(bonusNumber);
         if (winningNumbers.contains(bonusNumber)) {
-            throw new IllegalArgumentException();
+            throw new UpperCaseException("보너스 번호가 당첨 번호와 같습니다.");
+        }
+    }
+
+    private Integer getInteger(String userInputNumber) {
+        try {
+            return Integer.valueOf(userInputNumber);
+        } catch (NumberFormatException exception) {
+            throw new UpperCaseException("정수가 아닌 잘못된 입력입니다.");
         }
     }
 }
