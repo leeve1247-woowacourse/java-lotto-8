@@ -8,8 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LottoGameConfigurator {
-    private LottoGameConfigValidator lottoGameConfigValidator = new LottoGameConfigValidator();
-    private ConsoleView consoleView;
+    private final LottoGameConfigValidator lottoGameConfigValidator = new LottoGameConfigValidator();
+    private final ConsoleView consoleView;
+
     public LottoGameConfigurator(ConsoleView consoleView) {
         this.consoleView = consoleView;
     }
@@ -29,19 +30,19 @@ public class LottoGameConfigurator {
     }
 
     private List<Lotto> initLottos(Integer money) {
-        List<Lotto> lottos = new ArrayList<>();
         int count = money / 1000;
+        List<Lotto> lottos = generateLottos(count);
+        consoleView.print(lottos);
+        return lottos;
+    }
 
-        consoleView.printLottosHeader(count);
-
+    private List<Lotto> generateLottos(int count) {
+        List<Lotto> lottos = new ArrayList<>();
         while (count > 0) {
             List<Integer> integers = Randoms.pickUniqueNumbersInRange(1, 45, 6);
             lottos.add(new Lotto(integers));
             count = count - 1;
         }
-
-        consoleView.print(lottos);
-
         return lottos;
     }
 
