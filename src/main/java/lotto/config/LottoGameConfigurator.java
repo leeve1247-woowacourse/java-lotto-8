@@ -23,18 +23,25 @@ public class LottoGameConfigurator {
         return new LottoGameConfig(
                 lottos,
                 winningNumbers,
-                bonusNumber
+                bonusNumber,
+                money
         );
     }
 
     private List<Lotto> initLottos(Integer money) {
         List<Lotto> lottos = new ArrayList<>();
         int count = money / 1000;
+
+        consoleView.printLottosHeader(count);
+
         while (count > 0) {
             List<Integer> integers = Randoms.pickUniqueNumbersInRange(1, 45, 6);
             lottos.add(new Lotto(integers));
             count = count - 1;
         }
+
+        consoleView.print(lottos);
+
         return lottos;
     }
 
