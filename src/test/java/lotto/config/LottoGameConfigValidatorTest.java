@@ -16,6 +16,13 @@ class LottoGameConfigValidatorTest {
     }
 
     @Test
+    void 잘못된_금액_입력_숫자가_아님_2() {
+        assertThatThrownBy(() -> lottoGameConfigValidator
+                .check("1000j"))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
     void 잘못된_금액_입력_소수() {
         assertThatThrownBy(() -> lottoGameConfigValidator
                 .check("2000.3"))
