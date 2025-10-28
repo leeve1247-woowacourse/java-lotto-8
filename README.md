@@ -2,6 +2,19 @@
 
 # **로또**
 
+## **기능 설정**
+
+- ConsoleView: 입출력 클래스
+  - InputView: 입력 콘솔 클래스
+  - OutputView: 출력 콘솔 클래스
+  - UserInput: 유저 입력값 DTO
+- LottoGameConfigurator: 유저 입력값 처리 및 검증
+  - LottoGameConfigValidator: 유저 입력값 검증
+  - LottoGameConfig: 로또 게임 시작에 필요한 설정값 DTO
+  - Lotto: 로또 티켓 DTO
+- LottoGameService: 로또 게임을 실행하는 곳
+  - LottoGameRecord: 로또 게임 기록 DTO
+
 ## **기능 요구 사항**
 
 간단한 로또 발매기를 구현한다.
