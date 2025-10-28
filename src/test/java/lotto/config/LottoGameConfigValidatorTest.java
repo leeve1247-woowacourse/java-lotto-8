@@ -9,6 +9,27 @@ class LottoGameConfigValidatorTest {
     LottoGameConfigValidator lottoGameConfigValidator = new LottoGameConfigValidator();
 
     @Test
+    void 잘못된_금액_입력_숫자가_아님() {
+        assertThatThrownBy(() -> lottoGameConfigValidator
+                .check("aaron"))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 잘못된_금액_입력_소수() {
+        assertThatThrownBy(() -> lottoGameConfigValidator
+                .check("2000.3"))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 잘못된_금액_입력_천원_단위() {
+        assertThatThrownBy(() -> lottoGameConfigValidator
+                .check("2200"))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
     void 구분자가_쉼표가_아님() {
         assertThatThrownBy(() -> lottoGameConfigValidator
                 .checkAndParse("1-2-3-4-5"))

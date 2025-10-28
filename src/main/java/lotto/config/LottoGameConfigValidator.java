@@ -5,11 +5,11 @@ import java.util.List;
 
 public class LottoGameConfigValidator {
     public void check(String userInputMoney) throws IllegalArgumentException {
-        Integer money = Integer.valueOf(userInputMoney);
+        int money = Integer.parseInt(userInputMoney);
         if (money < 1000) {
             throw new IllegalArgumentException("금액이 부족합니다.");
         }
-        if (money%1000 > 0){
+        if (money % 1000 > 0) {
             throw new IllegalArgumentException("천 원 단위로 입력해주세요");
         }
     }
