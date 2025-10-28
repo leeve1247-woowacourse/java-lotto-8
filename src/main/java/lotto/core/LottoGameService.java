@@ -1,14 +1,13 @@
 package lotto.core;
 
-import lotto.config.LottoGameConfig;
-import lotto.dto.Lotto;
-import lotto.dto.LottoGameRecord;
-import lotto.dto.Rank;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lotto.config.LottoGameConfig;
+import lotto.dto.Lotto;
+import lotto.dto.LottoGameRecord;
+import lotto.dto.Rank;
 
 public class LottoGameService {
     LottoGameConfig lottoGameConfig;
@@ -50,7 +49,7 @@ public class LottoGameService {
 
     private Rank determineRank(Lotto lotto) {
         int sharedNumberCount = getSharedNumbersSize(lotto);
-        boolean containedBonusNumber = lotto.numbers().contains(lottoGameConfig.bonusNumber());
+        boolean containedBonusNumber = lotto.getNumbers().contains(lottoGameConfig.bonusNumber());
         for (Rank rank : Rank.values()) {
             if (sharedNumberCount == rank.getCondition() && rank.checkBonus(containedBonusNumber)) {
                 return rank;
@@ -61,7 +60,7 @@ public class LottoGameService {
 
     private int getSharedNumbersSize(Lotto lotto) {
         List<Integer> sharedNumbers = new ArrayList<>(lottoGameConfig.winningNumbers());
-        sharedNumbers.retainAll(lotto.numbers());
+        sharedNumbers.retainAll(lotto.getNumbers());
         return sharedNumbers.size();
     }
 }
