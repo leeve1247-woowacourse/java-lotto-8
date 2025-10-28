@@ -1,5 +1,7 @@
 package lotto.view;
 
+import java.util.List;
+import lotto.dto.Lotto;
 import lotto.dto.LottoGameRecord;
 
 public class ConsoleView {
@@ -18,5 +20,10 @@ public class ConsoleView {
     public String getUserInput(String simpleLine) {
         outputView.print(simpleLine);
         return inputView.getUserInput();
+    }
+
+    public void print(List<Lotto> lottos) {
+        outputView.printLottosHeader(lottos.size());
+        outputView.print(lottos);
     }
 }
