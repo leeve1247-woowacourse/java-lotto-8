@@ -49,11 +49,11 @@ public class LottoGameConfigurator {
 
     private Integer initBonusNumber(List<Integer> winningNumbers) {
         return getValidInput("보너스 번호를 입력해 주세요.",
-                bonusNumber -> lottoGameConfigValidator.checkWinningNumbers(bonusNumber, winningNumbers));
+                bonusNumber -> lottoGameConfigValidator.checkBonusNumber(bonusNumber, winningNumbers));
     }
 
     private List<Integer> initWinningNumbers() {
-        return getValidInput("당첨 번호를 입력해 주세요.", lottoGameConfigValidator::checkBonusNumber);
+        return getValidInput("당첨 번호를 입력해 주세요.", lottoGameConfigValidator::checkWinningNumbers);
     }
 
     private Integer initMoney() {

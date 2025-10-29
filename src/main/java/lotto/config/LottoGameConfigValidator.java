@@ -25,11 +25,11 @@ public class LottoGameConfigValidator {
         }
     }
 
-    public List<Integer> checkBonusNumber(String winningNumbers) throws IllegalArgumentException {
+    public List<Integer> checkWinningNumbers(String winningNumbers) throws IllegalArgumentException {
         return Arrays.stream(winningNumbers.split(",")).map(Integer::valueOf).peek(this::checkIfInRange).toList();
     }
 
-    public Integer checkWinningNumbers(String rawBonusNumber, List<Integer> winningNumbers) {
+    public Integer checkBonusNumber(String rawBonusNumber, List<Integer> winningNumbers) {
         Integer bonusNumber = getInteger(rawBonusNumber);
         checkIfInRange(bonusNumber);
         if (winningNumbers.contains(bonusNumber)) {

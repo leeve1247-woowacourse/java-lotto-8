@@ -39,21 +39,21 @@ class LottoGameConfigValidatorTest {
     @Test
     void 구분자가_쉼표가_아님() {
         assertThatThrownBy(() -> lottoGameConfigValidator
-                .checkBonusNumber("1-2-3-4-5"))
+                .checkWinningNumbers("1-2-3-4-5"))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void 숫자가_범위를_벗어남() {
         assertThatThrownBy(() -> lottoGameConfigValidator
-                .checkBonusNumber("1,2,3,-65,27"))
+                .checkWinningNumbers("1,2,3,-65,27"))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void 소수를_입력한_당첨번호() {
         assertThatThrownBy(() -> lottoGameConfigValidator
-                .checkBonusNumber("1,2,3,3.5,27"))
+                .checkWinningNumbers("1,2,3,3.5,27"))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }
