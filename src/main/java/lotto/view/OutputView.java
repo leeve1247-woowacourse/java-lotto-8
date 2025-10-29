@@ -1,19 +1,18 @@
 package lotto.view;
 
-import lotto.dto.Lotto;
-import lotto.dto.LottoGameRecord;
-import lotto.dto.Rank;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import lotto.dto.Lotto;
+import lotto.dto.LottoGameRecord;
+import lotto.dto.Rank;
 
 public class OutputView {
     public void print(LottoGameRecord gameRecord) {
         for (Map.Entry<Rank, Integer> entry : reverseSort(gameRecord)) {
             System.out.printf("%d개 일치", entry.getKey().getCondition());
-            printIfBonusMatchingRqeuired(entry);
+            printIfBonusMatchingRequired(entry);
             System.out.printf(" (%,d원) - %d개\n", entry.getKey().getPrize(), entry.getValue());
         }
         System.out.printf("총 수익률은 %.1f%%입니다.", gameRecord.profitRate());
@@ -26,7 +25,7 @@ public class OutputView {
         return entries;
     }
 
-    private void printIfBonusMatchingRqeuired(Map.Entry<Rank, Integer> entry) {
+    private void printIfBonusMatchingRequired(Map.Entry<Rank, Integer> entry) {
         if (bonusMatchingRequired(entry)) {
             System.out.print(", 보너스 볼 일치");
         }
