@@ -14,8 +14,8 @@ public class LottoGameConfigValidator {
         }
     }
 
-    public void checkIfInRange(Integer a) throws IllegalArgumentException {
-        if (a < 1 || a > 45) {
+    public void checkIfInRange(Integer lottoNumber) throws IllegalArgumentException {
+        if (lottoNumber < 1 || lottoNumber > 45) {
             throw new IllegalArgumentException();
         }
     }
