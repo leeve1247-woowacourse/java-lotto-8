@@ -1,13 +1,18 @@
 package lotto.config;
 
 import camp.nextstep.edu.missionutils.Randoms;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
 import lotto.dto.Lotto;
 import lotto.view.ConsoleView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class LottoGameConfigurator {
+    private static final int BASIC_MONEY_UNIT = 1000;
+    private static final int LOTTO_START_INCLUSIVE = 1;
+    private static final int LOTTO_END_INCLUSIVE = 45;
+    private static final int LOTTO_NUMBER_COUNT = 6;
+
     private final LottoGameConfigValidator lottoGameConfigValidator = new LottoGameConfigValidator();
     private final ConsoleView consoleView;
 
@@ -21,16 +26,11 @@ public class LottoGameConfigurator {
         List<Integer> winningNumbers = initWinningNumbers();
         Integer bonusNumber = initBonusNumber(winningNumbers);
 
-        return new LottoGameConfig(
-                lottos,
-                winningNumbers,
-                bonusNumber,
-                money
-        );
+        return new LottoGameConfig(lottos, winningNumbers, bonusNumber, money);
     }
 
     private List<Lotto> initLottos(Integer money) {
-        int count = money / 1000;
+        int count = money / BASIC_MONEY_UNIT;
         List<Lotto> lottos = generateLottos(count);
         consoleView.print(lottos);
         return lottos;
@@ -39,7 +39,8 @@ public class LottoGameConfigurator {
     private List<Lotto> generateLottos(int count) {
         List<Lotto> lottos = new ArrayList<>();
         while (count > 0) {
-            List<Integer> integers = Randoms.pickUniqueNumbersInRange(1, 45, 6);
+            List<Integer> integers = Randoms.pickUniqueNumbersInRange(LOTTO_START_INCLUSIVE, LOTTO_END_INCLUSIVE,
+                    LOTTO_NUMBER_COUNT);
             lottos.add(new Lotto(integers));
             count = count - 1;
         }
@@ -47,39 +48,26 @@ public class LottoGameConfigurator {
     }
 
     private Integer initBonusNumber(List<Integer> winningNumbers) {
-        while (true) {
-            String bonusNumber = consoleView.getUserInput("보너스 번호를 입력해 주세요.");
-            try {
-                lottoGameConfigValidator.check(bonusNumber, winningNumbers);
-            } catch (Exception exception) {
-                System.out.println(exception.getMessage());
-                continue;
-            }
-            return Integer.valueOf(bonusNumber);
-        }
+        return getValidInput("보너스 번호를 입력해 주세요.",
+                bonusNumber -> lottoGameConfigValidator.checkWinningNumbers(bonusNumber, winningNumbers));
     }
 
     private List<Integer> initWinningNumbers() {
-        while (true) {
-            String winningNumbers = consoleView.getUserInput("당첨 번호를 입력해 주세요.");
-            try {
-                return lottoGameConfigValidator.checkAndParse(winningNumbers);
-            } catch (Exception exception) {
-                System.out.println(exception.getMessage());
-            }
-        }
+        return getValidInput("당첨 번호를 입력해 주세요.", lottoGameConfigValidator::checkBonusNumber);
     }
 
     private Integer initMoney() {
+        return getValidInput("구입금액을 입력해 주세요", lottoGameConfigValidator::checkMoney);
+    }
+
+    private <T> T getValidInput(String message, Function<String, T> validator) {
         while (true) {
-            String money = consoleView.getUserInput("구입금액을 입력해 주세요");
+            String input = consoleView.getUserInput(message);
             try {
-                lottoGameConfigValidator.check(money);
+                return validator.apply(input);
             } catch (Exception exception) {
                 System.out.println(exception.getMessage());
-                continue;
             }
-            return Integer.valueOf(money);
         }
     }
 }
