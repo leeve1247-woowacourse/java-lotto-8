@@ -37,9 +37,23 @@ class LottoGameConfigValidatorTest {
     }
 
     @Test
+    void 잘못된_금액_공백_입력(){
+        assertThatThrownBy(() -> lottoGameConfigValidator
+                .checkWinningNumbers(""))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
     void 구분자가_쉼표가_아님() {
         assertThatThrownBy(() -> lottoGameConfigValidator
                 .checkWinningNumbers("1-2-3-4-5"))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 공백_입력(){
+        assertThatThrownBy(() -> lottoGameConfigValidator
+                .checkWinningNumbers(""))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
